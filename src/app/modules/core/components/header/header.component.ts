@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: [ './header.component.scss' ],
 })
 export class HeaderComponent implements OnInit {
+  logoText = 'Video Course';
+  userName = 'User';
+  isLoggedIn = false;
+  loginBtnText = this.isLoggedIn ? 'Log off' : 'Log in';
 
   constructor() { }
 
