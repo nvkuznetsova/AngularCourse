@@ -1,1 +1,18 @@
-<p>courses-page works!</p>
+<div class="courses-page">
+  <app-breadcrumbs></app-breadcrumbs>
+  <app-search></app-search>
+  <div class="add-btn-wrapper">
+    <button class="add-btn" type="button" (click)="onAddCourse()">
+      <fa-icon class="add-btn__icon" [icon]="faPlus"></fa-icon>{{ addBtnText }}
+    </button>
+  </div>
+  <div class="courses-wrapper">
+    <app-course-item
+      *ngFor="let course of courses"
+      [course]="course"
+      (edit)="onEditCourse($event)"
+      (delete)="onDeleteCourse($event)"
+    ></app-course-item>
+  </div>
+  <div class="load-more-btn" (click)="onLoadMoreCourses()">{{ loadBtnText | uppercase }}</div>
+</div>

@@ -1,1 +1,24 @@
-<p>course-item works!</p>
+<div class="course-item">
+  <div class="course-item__header">
+    <h3 class="title">{{ course.title }}</h3>
+    <div class="schedule">
+      <span class="schedule__duration">
+        <fa-icon class="schedule-icon" [icon]="faClock"></fa-icon>{{ duration }}
+      </span>
+      <span class="schedule__date">
+        <fa-icon class="schedule-icon" [icon]="faCalendar"></fa-icon>{{ creationDate }}
+      </span>
+    </div>
+  </div>
+  <div class="course-item__description">
+    <div class="course-description">{{ course.description }}</div>
+    <div class="course-actions">
+      <button class="course-actions__edit" (click)="onEdit()">
+        <fa-icon class="btn-icon" [icon]="faPen"></fa-icon>{{ btnLabels.edit }}
+      </button>
+      <button class="course-actions__delete" (click)="onDelete()">
+        <fa-icon class="btn-icon" [icon]="faTrash"></fa-icon>{{ btnLabels.delete }}
+      </button>
+    </div>
+  </div>
+</div>

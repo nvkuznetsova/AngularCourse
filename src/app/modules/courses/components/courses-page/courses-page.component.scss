@@ -1,0 +1,70 @@
+@import 'src/styles/colors.scss';
+
+.courses-page {
+  height: 100%;
+  box-sizing: border-box;
+  background-color: $pale-grey;
+
+  .add-btn-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 24px 85px 12px;
+
+    @media (max-width: 650px) {
+      margin: 24px 20px 12px;
+    }
+
+    .add-btn {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 36px;
+      max-width: 140px;
+      padding: 6px 20px;
+      box-sizing: border-box;
+      color: white;
+      background-color: $dark-sky-blue;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+
+      &__icon {
+        margin-right: 10px;
+      }
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .courses-wrapper {
+    margin: 0 85px;
+
+    @media (max-width: 650px) {
+      margin: 0 20px;
+    }
+  }
+
+  .load-more-btn {
+    height: 48px;
+    margin: 24px 85px;
+    padding: 6px 0;
+    text-align: center;
+    text-decoration: underline;
+    font-size: 12px;
+    line-height: 48px;
+    color: $soft-blue;
+    background-color: white;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    @media (max-width: 650px) {
+      margin: 24px 20px;
+    }
+  }
+}

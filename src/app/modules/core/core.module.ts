@@ -16,6 +16,7 @@ import { HeaderComponent } from './components/header/header.component';
     CommonModule,
   ],
   exports: [
+    BreadcrumbsComponent,
     FooterComponent,
     HeaderComponent,
   ],
