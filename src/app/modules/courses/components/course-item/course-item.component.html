@@ -13,10 +13,10 @@
   <div class="course-item__description">
     <div class="course-description">{{ course.description }}</div>
     <div class="course-actions">
-      <button class="course-actions__edit" (click)="onEdit()">
+      <button class="course-actions__edit" (click)="onEdit()" data-marker="edit-btn">
         <fa-icon class="btn-icon" [icon]="faPen"></fa-icon>{{ btnLabels.edit }}
       </button>
-      <button class="course-actions__delete" (click)="onDelete()">
+      <button class="course-actions__delete" (click)="onDelete()" data-marker="delete-btn">
         <fa-icon class="btn-icon" [icon]="faTrash"></fa-icon>{{ btnLabels.delete }}
       </button>
     </div>

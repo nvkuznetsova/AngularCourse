@@ -13,3 +13,5 @@ export const courses: Array<CourseModel> = [
   new CourseModel(4, 'Video Course 4', new Date(), 3600, description),
   new CourseModel(5, 'Video Course 5', new Date(), 3600, description),
 ];
+
+export const course: CourseModel = new CourseModel(1, 'Video Course 1', new Date(), 3600, description);

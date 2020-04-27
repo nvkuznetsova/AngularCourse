@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { courses } from 'src/app/mocks/courses-mock';
 import { CourseModel } from 'src/app/model/Course';
@@ -8,7 +8,12 @@ import { CourseModel } from 'src/app/model/Course';
   templateUrl: './courses-page.component.html',
   styleUrls: [ './courses-page.component.scss' ],
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesPageComponent implements OnInit,
+OnChanges,
+AfterContentInit,
+AfterContentChecked,
+AfterViewInit,
+AfterViewChecked {
   loadBtnText = 'Load more';
   addBtnText = 'Add course';
   faPlus = faPlus;
@@ -16,8 +21,29 @@ export class CoursesPageComponent implements OnInit {
 
   constructor() { }
 
+  ngOnChanges(): void {
+    console.log('OnChanges called');
+  }
+
   ngOnInit() {
     this.courses = courses;
+    console.log('onInit called');
+  }
+
+  ngAfterContentInit(): void {
+    console.log('AfterContentInit called');
+  }
+
+  ngAfterContentChecked(): void {
+    console.log('AfterContentChecked called');
+  }
+
+  ngAfterViewInit(): void {
+    console.log('AfterViewInit called');
+  }
+
+  ngAfterViewChecked(): void {
+    console.log('AfterViewChecked called');
   }
 
   onAddCourse(): void {

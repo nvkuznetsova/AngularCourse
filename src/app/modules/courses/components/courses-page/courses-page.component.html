@@ -2,7 +2,7 @@
   <app-breadcrumbs></app-breadcrumbs>
   <app-search></app-search>
   <div class="add-btn-wrapper">
-    <button class="add-btn" type="button" (click)="onAddCourse()">
+    <button class="add-btn" type="button" (click)="onAddCourse()" data-marker="add-btn">
       <fa-icon class="add-btn__icon" [icon]="faPlus"></fa-icon>{{ addBtnText }}
     </button>
   </div>
@@ -12,7 +12,8 @@
       [course]="course"
       (edit)="onEditCourse($event)"
       (delete)="onDeleteCourse($event)"
+      data-marker="course"
     ></app-course-item>
   </div>
-  <div class="load-more-btn" (click)="onLoadMoreCourses()">{{ loadBtnText | uppercase }}</div>
+  <div class="load-more-btn" (click)="onLoadMoreCourses()" data-marker="load-btn">{{ loadBtnText | uppercase }}</div>
 </div>
