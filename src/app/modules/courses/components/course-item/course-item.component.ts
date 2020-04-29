@@ -1,8 +1,6 @@
 import { ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { faCalendarAlt, faClock, faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCalendarAlt, faClock, faPen, faStar, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { CourseModel } from 'src/app/model/Course';
-
-const dateOptions = { year: 'numeric', month: 'short', day: 'numeric' };
 
 @Component({
   selector: 'app-course-item',
@@ -17,8 +15,8 @@ export class CourseItemComponent implements OnInit, DoCheck {
   faPen = faPen;
   faTrash = faTrash;
   faClock = faClock;
+  faStar = faStar;
   faCalendar = faCalendarAlt;
-  duration = '1h 30m';
   btnLabels = {
     edit: 'Edit',
     delete: 'Delete',
@@ -31,9 +29,7 @@ export class CourseItemComponent implements OnInit, DoCheck {
     console.log('doCheck called');
   }
 
-  ngOnInit() {
-    this.creationDate = this.course.creationDate.toLocaleString('en-GB', dateOptions);
-  }
+  ngOnInit() {}
 
   onEdit(): void {
     this.edit.emit(this.course);

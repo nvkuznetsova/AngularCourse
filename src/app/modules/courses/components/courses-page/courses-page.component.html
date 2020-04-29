@@ -1,19 +1,23 @@
 <div class="courses-page">
   <app-breadcrumbs></app-breadcrumbs>
-  <app-search></app-search>
+  <app-search (search)="onSearch($event)"></app-search>
   <div class="add-btn-wrapper">
     <button class="add-btn" type="button" (click)="onAddCourse()" data-marker="add-btn">
       <fa-icon class="add-btn__icon" [icon]="faPlus"></fa-icon>{{ addBtnText }}
     </button>
   </div>
-  <div class="courses-wrapper">
+  <div class="courses-wrapper" *ngIf="courses.length; else emptyMessage">
     <app-course-item
-      *ngFor="let course of courses"
+      *ngFor="let course of (courses | orderBy: 'creationDate')"
       [course]="course"
       (edit)="onEditCourse($event)"
       (delete)="onDeleteCourse($event)"
       data-marker="course"
     ></app-course-item>
+    <div class="load-more-btn" (click)="onLoadMoreCourses()" data-marker="load-btn">{{ loadBtnText | uppercase }}</div>
   </div>
-  <div class="load-more-btn" (click)="onLoadMoreCourses()" data-marker="load-btn">{{ loadBtnText | uppercase }}</div>
 </div>
+
+<ng-template #emptyMessage>
+  <div class="empty-message">{{ emptyCoursesMessage | uppercase }}</div>
+</ng-template>

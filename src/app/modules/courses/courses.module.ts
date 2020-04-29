@@ -9,9 +9,10 @@ import { CourseItemComponent } from './components/course-item/course-item.compon
 import { CoursesPageComponent } from './components/courses-page/courses-page.component';
 import { SearchComponent } from './components/search/search.component';
 import { CoursesRoutingModule } from './courses-routing.module';
+import { HighlightCourseDirective } from './directives/highlight-course.directive';
 
 @NgModule({
-  declarations: [ CoursesPageComponent, CourseItemComponent, SearchComponent ],
+  declarations: [ CoursesPageComponent, CourseItemComponent, SearchComponent, HighlightCourseDirective ],
   imports: [
     CommonModule,
     CoursesRoutingModule,

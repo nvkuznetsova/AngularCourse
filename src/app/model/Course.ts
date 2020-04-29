@@ -8,5 +8,6 @@ export class CourseModel implements ICourse {
     public creationDate: Date,
     public duration: number,
     public description: string,
+    public topRated: boolean,
     ) { }
 }
