@@ -2,6 +2,8 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { courses } from 'src/app/mocks/courses-mock';
+import { OrderPipe } from 'src/app/modules/core/pipes/order/order.pipe';
+import { SearchPipe } from 'src/app/modules/core/pipes/search/search.pipe';
 
 import { CoursesPageComponent } from './courses-page.component';
 
@@ -11,12 +13,14 @@ describe('CoursesPageComponent', () => {
   let element: DebugElement;
 
   const coursesMock = courses;
+  const searchPipeSpy = jasmine.createSpyObj('SearchPipe', [ 'transform' ]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CoursesPageComponent ],
+      declarations: [ CoursesPageComponent, OrderPipe ],
       schemas: [ NO_ERRORS_SCHEMA ],
     })
+    .overrideProvider(SearchPipe, { useValue: searchPipeSpy })
     .compileComponents();
   }));
 
@@ -59,5 +63,19 @@ describe('CoursesPageComponent', () => {
     const courseCard = element.query(By.css('[data-marker="course"]'));
     courseCard.triggerEventHandler('delete', courseId);
     expect(deleteCourseSpy).toHaveBeenCalledWith(courseId);
+  });
+
+  it('should call `onSearch` handler', () => {
+    const input = 'some input';
+    const onSearchSpy = spyOn(component, 'onSearch');
+    const searchInput = element.query(By.css('[data-marker="search"]'));
+    searchInput.triggerEventHandler('search', input);
+    expect(onSearchSpy).toHaveBeenCalledWith(input);
+  });
+
+  it('should call SearchPipe', () => {
+    const input = 'some input';
+    component.onSearch(input);
+    expect(searchPipeSpy.transform).toHaveBeenCalledWith(courses, input, 'title');
   });
 });

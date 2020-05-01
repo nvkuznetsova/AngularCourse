@@ -1,7 +1,7 @@
 <div class="course-item" [ngClass]="{'top-rated': course.topRated}" [appHighlightCourse]="course.creationDate">
   <div class="course-item__header">
     <h3 class="title">{{ course.title | uppercase }}
-      <fa-icon *ngIf="course.topRated" class="star-icon" [icon]="faStar"></fa-icon>
+      <fa-icon *ngIf="course.topRated" class="star-icon" [icon]="faStar" data-marker="star"></fa-icon>
     </h3>
     <div class="schedule">
       <span class="schedule__duration">

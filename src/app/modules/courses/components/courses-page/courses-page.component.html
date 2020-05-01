@@ -1,6 +1,6 @@
 <div class="courses-page">
   <app-breadcrumbs></app-breadcrumbs>
-  <app-search (search)="onSearch($event)"></app-search>
+  <app-search (search)="onSearch($event)" data-marker="search"></app-search>
   <div class="add-btn-wrapper">
     <button class="add-btn" type="button" (click)="onAddCourse()" data-marker="add-btn">
       <fa-icon class="add-btn__icon" [icon]="faPlus"></fa-icon>{{ addBtnText }}
