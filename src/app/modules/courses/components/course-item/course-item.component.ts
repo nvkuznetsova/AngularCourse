@@ -21,7 +21,6 @@ export class CourseItemComponent implements OnInit, DoCheck {
     edit: 'Edit',
     delete: 'Delete',
   };
-  creationDate: string;
 
   constructor() { }
 

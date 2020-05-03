@@ -1,14 +1,17 @@
-import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnChanges, OnInit } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, OnChanges, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { courses } from 'src/app/mocks/courses-mock';
 import { CourseModel } from 'src/app/model/Course';
+import { ConfirmModalComponent } from 'src/app/modules/core/components/confirm-modal/confirm-modal.component';
 import { SearchPipe } from 'src/app/modules/core/pipes/search/search.pipe';
+import { CoursesService } from 'src/app/services/courses/courses.service';
 
 @Component({
   selector: 'app-courses-page',
   templateUrl: './courses-page.component.html',
   styleUrls: [ './courses-page.component.scss' ],
   providers: [ SearchPipe ],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CoursesPageComponent implements OnInit,
 OnChanges,
@@ -23,15 +26,18 @@ AfterViewChecked {
   courses: Array<CourseModel>;
   allCourses: Array<CourseModel>;
 
-  constructor(private searchPipe: SearchPipe) { }
+  constructor(
+    private searchPipe: SearchPipe,
+    private coursesService: CoursesService,
+    private dialog: MatDialog,
+  ) { }
 
   ngOnChanges(): void {
     console.log('OnChanges called');
   }
 
   ngOnInit() {
-    this.courses = courses;
-    this.allCourses = courses;
+    this.getAllCourses();
   }
 
   ngAfterContentInit(): void {
@@ -50,6 +56,12 @@ AfterViewChecked {
     console.log('AfterViewChecked called');
   }
 
+  getAllCourses(): void {
+    const courses = this.coursesService.getCoursesList();
+    this.courses = courses;
+    this.allCourses = courses;
+  }
+
   onAddCourse(): void {
     console.log('add course');
   }
@@ -63,7 +75,25 @@ AfterViewChecked {
   }
 
   onDeleteCourse(courseId: number): void {
-    console.log(courseId);
+    const course = this.allCourses.find((item: CourseModel) => item.id === courseId);
+    const dialogData = {
+      title: 'Delete course?',
+      message: `Are you sure you want to delete ${course.title}?`,
+      confirmLabel: 'Yes, delete',
+    };
+
+    const dialogRef = this.dialog.open(ConfirmModalComponent, {
+      data: dialogData,
+      hasBackdrop: true,
+      width: '400px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.coursesService.removeCourse(courseId);
+        this.getAllCourses();
+      }
+    });
   }
 
   onSearch(input: string): void {

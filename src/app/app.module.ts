@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from './modules/core/core.module';
 import { CoursesModule } from './modules/courses/courses.module';
+import { LoginModule } from './modules/login/login.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { CoursesModule } from './modules/courses/courses.module';
   imports: [
     BrowserModule,
     CoursesModule,
+    LoginModule,
     CoreModule,
     AppRoutingModule,
   ],

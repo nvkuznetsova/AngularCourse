@@ -1,0 +1,47 @@
+@import 'src/styles/colors.scss';
+
+.dialog {
+  &__title {
+    font-size: 18px;
+    font-weight: 600;
+    color: $slate-grey;
+  }
+
+  &__message {
+    margin-top: 20px;
+    color: $slate-grey;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .btn-cancel {
+      height: 36px;
+      margin-right: 18px;
+      padding: 0 18px;
+      font-weight: 600;
+      color: $slate-grey;
+      background-color: $light-grey;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-confirm {
+      height: 36px;
+      padding: 0 18px;
+      font-weight: 600;
+      color: white;
+      background-color: $sick-green;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($color: $sick-green, $alpha: 0.8);
+      }
+    }
+  }
+}
