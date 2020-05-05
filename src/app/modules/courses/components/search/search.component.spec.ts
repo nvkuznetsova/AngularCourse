@@ -35,4 +35,13 @@ describe('SearchComponent', () => {
     searchBtn.click();
     expect(searchSpy).toHaveBeenCalled();
   });
+
+  it('should emit `searchInput` value', () => {
+    const input = 'some input';
+    const emitSpy = spyOn(component.search, 'emit');
+    component.searchInput = input;
+    fixture.detectChanges();
+    component.onSearch();
+    expect(emitSpy).toHaveBeenCalledWith(input);
+  });
 });
