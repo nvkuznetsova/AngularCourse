@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { CoreModule } from './modules/core/core.module';
 import { CoursesModule } from './modules/courses/courses.module';
 
 @NgModule({
@@ -12,6 +13,7 @@ import { CoursesModule } from './modules/courses/courses.module';
   imports: [
     BrowserModule,
     CoursesModule,
+    CoreModule,
     AppRoutingModule,
   ],
   providers: [],
