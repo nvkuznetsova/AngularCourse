@@ -1,9 +1,12 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { courses } from 'src/app/mocks/courses-mock';
+import { of } from 'rxjs';
+import { courses as coursesMock } from 'src/app/mocks/courses-mock';
 import { OrderPipe } from 'src/app/modules/core/pipes/order/order.pipe';
 import { SearchPipe } from 'src/app/modules/core/pipes/search/search.pipe';
+import { CoursesService } from 'src/app/services/courses/courses.service';
 
 import { CoursesPageComponent } from './courses-page.component';
 
@@ -12,11 +15,18 @@ describe('CoursesPageComponent', () => {
   let fixture: ComponentFixture<CoursesPageComponent>;
   let element: DebugElement;
 
-  const coursesMock = courses;
   const searchPipeSpy = jasmine.createSpyObj('SearchPipe', [ 'transform' ]);
+  const coursesServiceSpy = jasmine.createSpyObj('CoursesService', [ 'getCoursesList', 'removeCourse' ]);
+  const dialogMock = {
+    open: jasmine.createSpy('open').and.returnValue({ afterClosed: () => of(true) }),
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [
+        { provide: MatDialog, useValue: dialogMock },
+        { provide: CoursesService, useValue: coursesServiceSpy },
+      ],
       declarations: [ CoursesPageComponent, OrderPipe ],
       schemas: [ NO_ERRORS_SCHEMA ],
     })
@@ -28,6 +38,7 @@ describe('CoursesPageComponent', () => {
     fixture = TestBed.createComponent(CoursesPageComponent);
     component = fixture.componentInstance;
     element = fixture.debugElement;
+    coursesServiceSpy.getCoursesList.and.returnValue(coursesMock);
     fixture.detectChanges();
   });
 
@@ -65,6 +76,18 @@ describe('CoursesPageComponent', () => {
     expect(deleteCourseSpy).toHaveBeenCalledWith(courseId);
   });
 
+  it('should oped dialog and call service methods on delete', () => {
+    const courseId = 2;
+
+    component.onDeleteCourse(courseId);
+    expect(dialogMock.open).toHaveBeenCalled();
+
+    dialogMock.open().afterClosed().subscribe(() => {
+      expect(coursesServiceSpy.removeCourse).toHaveBeenCalledWith(courseId);
+      expect(coursesServiceSpy.getCoursesList).toHaveBeenCalled();
+    });
+  });
+
   it('should call `onSearch` handler', () => {
     const input = 'some input';
     const onSearchSpy = spyOn(component, 'onSearch');
@@ -76,6 +99,6 @@ describe('CoursesPageComponent', () => {
   it('should call SearchPipe', () => {
     const input = 'some input';
     component.onSearch(input);
-    expect(searchPipeSpy.transform).toHaveBeenCalledWith(courses, input, 'title');
+    expect(searchPipeSpy.transform).toHaveBeenCalledWith(component.allCourses, input, 'title');
   });
 });
