@@ -1,5 +1,6 @@
 import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy, Component, OnChanges, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
 import { CourseModel } from 'src/app/model/Course';
 import { ConfirmModalComponent } from 'src/app/modules/core/components/confirm-modal/confirm-modal.component';
@@ -30,6 +31,7 @@ AfterViewChecked {
     private searchPipe: SearchPipe,
     private coursesService: CoursesService,
     private dialog: MatDialog,
+    private router: Router,
   ) { }
 
   ngOnChanges(): void {
@@ -63,15 +65,15 @@ AfterViewChecked {
   }
 
   onAddCourse(): void {
-    console.log('add course');
+    this.router.navigateByUrl('/courses/new');
   }
 
   onLoadMoreCourses(): void {
     console.log('load button clicked');
   }
 
-  onEditCourse(course: CourseModel): void {
-    console.log(course.title);
+  onEditCourse(courseId: number): void {
+    this.router.navigateByUrl(`/courses/${courseId}`);
   }
 
   onDeleteCourse(courseId: number): void {

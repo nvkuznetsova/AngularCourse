@@ -13,6 +13,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { DurarionPipe } from './pipes/duration/durarion.pipe';
 import { OrderPipe } from './pipes/order/order.pipe';
 import { SearchPipe } from './pipes/search/search.pipe';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { SearchPipe } from './pipes/search/search.pipe';
     OrderPipe,
     SearchPipe,
     ConfirmModalComponent,
+    PageNotFoundComponent,
   ],
   imports: [
     CommonModule,

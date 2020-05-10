@@ -1,0 +1,38 @@
+<app-breadcrumbs [breadcrumbLabel]="isEditMode ? course.title : 'New course'"></app-breadcrumbs>
+<div class="add-edit-course">
+  <div class="add-edit-course__wrapper">
+    <div class="add-edit-course__header">{{ pageHeader }}</div>
+    <form class="add-edit-course__form">
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Title:</mat-label>
+        <input matInput placeholder="Add title" type="text" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Description:</mat-label>
+        <textarea matInput placeholder="Add description" rows="3" required></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Duration:</mat-label>
+        <input matInput placeholder="Duration in minutes" type="number" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Date:</mat-label>
+        <input matInput [matDatepicker]="courseStartDate" placeholder="Choose start date">
+        <mat-datepicker-toggle matSuffix [for]="courseStartDate"></mat-datepicker-toggle>
+        <mat-datepicker #courseStartDate></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="form-field">
+        <mat-label>Authors:</mat-label>
+        <input matInput placeholder="Start typing" type="text">
+      </mat-form-field>
+    </form>
+    <div class="add-edit-course__footer">
+      <button class="btn-cancel" (click)="goToMainPage()" data-marker="btn-cancel">Cancel</button>
+      <button class="btn-save" (click)="onSave()" data-marker="btn-save">Save</button>
+    </div>
+  </div>
+</div>

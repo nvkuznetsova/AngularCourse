@@ -18,7 +18,6 @@ export class HeaderComponent implements OnInit, DoCheck {
     private router: Router,
   ) { }
 
-  // TODO need to remove after guards implementation
   ngDoCheck() {
     this.setUserInfo();
   }
@@ -33,9 +32,13 @@ export class HeaderComponent implements OnInit, DoCheck {
     this.router.navigateByUrl('/login');
   }
 
-  setUserInfo() {
+  setUserInfo(): void {
     this.isLoggedIn = this.authService.isAuthenticated();
     this.userInfo = this.authService.getUserInfo();
+  }
+
+  goToMainPage(): void {
+    this.router.navigateByUrl('/courses');
   }
 
 }

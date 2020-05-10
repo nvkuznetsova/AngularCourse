@@ -1,3 +1,9 @@
 <div class="breadcrumbs">
-  <div class="breadcrumbs__path">{{ breadcrumbs }}</div>
+  <div class="breadcrumbs__path">
+    <span class="courses-link" (click)="goToMainPage()">{{ breadcrumbs }}</span>
+    <span *ngIf="breadcrumbLabel">
+      <span class="divider">/</span>
+      <span *ngIf="breadcrumbLabel">{{ breadcrumbLabel }}</span>
+    </span>
+  </div>
 </div>

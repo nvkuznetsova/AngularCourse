@@ -10,7 +10,7 @@ import { CourseModel } from 'src/app/model/Course';
 })
 export class CourseItemComponent implements OnInit, DoCheck {
   @Input() course: CourseModel;
-  @Output() edit: EventEmitter<CourseModel> = new EventEmitter<CourseModel>();
+  @Output() edit: EventEmitter<number> = new EventEmitter<number>();
   @Output() delete: EventEmitter<number> = new EventEmitter<number>();
   faPen = faPen;
   faTrash = faTrash;
@@ -31,7 +31,7 @@ export class CourseItemComponent implements OnInit, DoCheck {
   ngOnInit() {}
 
   onEdit(): void {
-    this.edit.emit(this.course);
+    this.edit.emit(this.course.id);
   }
 
   onDelete(): void {
