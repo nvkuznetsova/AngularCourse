@@ -40,7 +40,7 @@ describe('CourseItemComponent', () => {
     const editBtn = element.query(By.css('[data-marker="edit-btn"]')).nativeElement;
     editBtn.click();
     expect(onEditSpy).toHaveBeenCalled();
-    expect(emitSpy).toHaveBeenCalledWith(component.course);
+    expect(emitSpy).toHaveBeenCalledWith(component.course.id);
   });
 
   it('should emit course when `onDelete` handler called', () => {

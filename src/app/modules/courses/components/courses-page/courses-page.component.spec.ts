@@ -2,6 +2,7 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { courses as coursesMock } from 'src/app/mocks/courses-mock';
 import { OrderPipe } from 'src/app/modules/core/pipes/order/order.pipe';
@@ -20,12 +21,16 @@ describe('CoursesPageComponent', () => {
   const dialogMock = {
     open: jasmine.createSpy('open').and.returnValue({ afterClosed: () => of(true) }),
   };
+  const mockRouter = {
+    navigateByUrl: jasmine.createSpy('navigateByUrl'),
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
         { provide: MatDialog, useValue: dialogMock },
         { provide: CoursesService, useValue: coursesServiceSpy },
+        { provide: Router, useValue: mockRouter },
       ],
       declarations: [ CoursesPageComponent, OrderPipe ],
       schemas: [ NO_ERRORS_SCHEMA ],
@@ -53,6 +58,11 @@ describe('CoursesPageComponent', () => {
     expect(addCourseSpy).toHaveBeenCalled();
   });
 
+  it('should navigate to add new course page on `onAddCourse`', () => {
+    component.onAddCourse();
+    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/courses/new');
+  });
+
   it('should call `onLoadMoreCourses` handler', () => {
     const loadMoreSpy = spyOn(component, 'onLoadMoreCourses');
     const loadMoreBtn = element.query(By.css('[data-marker="load-btn"]')).nativeElement;
@@ -66,6 +76,12 @@ describe('CoursesPageComponent', () => {
     const courseCard = element.query(By.css('[data-marker="course"]'));
     courseCard.triggerEventHandler('edit', course);
     expect(editCourseSpy).toHaveBeenCalledWith(course);
+  });
+
+  it('should navigate to edit course page on `onEditCourse`', () => {
+    const courseId = 5;
+    component.onEditCourse(courseId);
+    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith(`/courses/${courseId}`);
   });
 
   it('should call `onDeleteCourse` handler', () => {

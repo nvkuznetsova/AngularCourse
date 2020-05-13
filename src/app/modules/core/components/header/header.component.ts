@@ -32,13 +32,13 @@ export class HeaderComponent implements OnInit, DoCheck {
     this.router.navigateByUrl('/login');
   }
 
-  setUserInfo(): void {
-    this.isLoggedIn = this.authService.isAuthenticated();
-    this.userInfo = this.authService.getUserInfo();
-  }
-
   goToMainPage(): void {
     this.router.navigateByUrl('/courses');
+  }
+
+  private setUserInfo(): void {
+    this.isLoggedIn = this.authService.isAuthenticated();
+    this.userInfo = this.authService.getUserInfo();
   }
 
 }
