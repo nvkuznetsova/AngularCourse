@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { course } from 'src/app/mocks/courses-mock';
+import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { ICourse } from 'src/app/domain/Course';
 import { CourseModel } from 'src/app/model/Course';
 import { CoursesService } from 'src/app/services/courses/courses.service';
 
@@ -9,10 +11,12 @@ import { CoursesService } from 'src/app/services/courses/courses.service';
   templateUrl: './add-edit-course.component.html',
   styleUrls: [ './add-edit-course.component.scss' ],
 })
-export class AddEditCourseComponent implements OnInit {
+export class AddEditCourseComponent implements OnInit, OnDestroy {
   pageHeader: string;
   course: CourseModel;
   isEditMode: boolean;
+  isLoading: boolean;
+  sub$ = new Subscription();
 
   constructor(
     private route: ActivatedRoute,
@@ -24,9 +28,20 @@ export class AddEditCourseComponent implements OnInit {
     this.isEditMode = this.route.snapshot.paramMap.has('id');
     this.pageHeader = this.isEditMode ? 'Edit course' : 'New course';
     if (this.isEditMode) {
+      this.isLoading = true;
       const courseId = +this.route.snapshot.paramMap.get('id');
-      this.course = this.coursesService.getCourseById(courseId);
-      console.log(this.course);
+      this.sub$.add(this.coursesService.getCourseById(courseId).pipe(
+        tap(vc => {
+          this.course = vc;
+          this.isLoading = false;
+        })
+      ).subscribe());
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.sub$) {
+      this.sub$.unsubscribe();
     }
   }
 
@@ -34,9 +49,9 @@ export class AddEditCourseComponent implements OnInit {
     this.router.navigateByUrl('/courses');
   }
 
-  onSave(): void {
+  onSave(course: ICourse): void {
     if (!this.isEditMode) {
-      this.coursesService.createCourse(course);
+      this.sub$.add(this.coursesService.createCourse(course).subscribe());
     }
 
     this.goToMainPage();

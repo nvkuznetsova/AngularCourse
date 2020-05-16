@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from '../core/material.module';
 
@@ -12,6 +13,7 @@ import { LoginComponent } from './login.component';
   imports: [
     CommonModule,
     MaterialModule,
+    FormsModule,
     LoginRoutingModule,
   ],
 })
