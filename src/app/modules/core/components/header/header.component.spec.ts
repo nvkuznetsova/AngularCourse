@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
+import { of, Subject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { HeaderComponent } from './header.component';
@@ -11,7 +12,14 @@ describe('HeaderComponent', () => {
   const mockRouter = {
     navigateByUrl: jasmine.createSpy('navigateByUrl'),
   };
-  const authServiceSpy = jasmine.createSpyObj('AuthService', [ 'logout', 'isAuthenticated', 'getUserInfo' ]);
+
+  const authServiceSpy = {
+    user: new Subject(),
+    userInfo$: of(null),
+    isAuthenticated: jasmine.createSpy('isAuthenticated'),
+    logout: jasmine.createSpy('logout'),
+    getUserInfo: jasmine.createSpy('getUserInfo'),
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -26,6 +34,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(HeaderComponent);
+    authServiceSpy.getUserInfo.and.returnValue(of(null));
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -42,6 +51,5 @@ describe('HeaderComponent', () => {
   it('should log out user', () => {
     component.onLogOff();
     expect(authServiceSpy.logout).toHaveBeenCalled();
-    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/login');
   });
 });

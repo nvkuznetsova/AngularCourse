@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { courses as coursesMock } from 'src/app/mocks/courses-mock';
 import { OrderPipe } from 'src/app/modules/core/pipes/order/order.pipe';
-import { SearchPipe } from 'src/app/modules/core/pipes/search/search.pipe';
 import { CoursesService } from 'src/app/services/courses/courses.service';
 
 import { CoursesPageComponent } from './courses-page.component';
@@ -16,14 +15,16 @@ describe('CoursesPageComponent', () => {
   let fixture: ComponentFixture<CoursesPageComponent>;
   let element: DebugElement;
 
-  const searchPipeSpy = jasmine.createSpyObj('SearchPipe', [ 'transform' ]);
-  const coursesServiceSpy = jasmine.createSpyObj('CoursesService', [ 'getCoursesList', 'removeCourse' ]);
+  const coursesServiceSpy = jasmine.createSpyObj('CoursesService', [ 'getCoursesList', 'removeCourse', 'searchCourses' ]);
   const dialogMock = {
     open: jasmine.createSpy('open').and.returnValue({ afterClosed: () => of(true) }),
   };
   const mockRouter = {
     navigateByUrl: jasmine.createSpy('navigateByUrl'),
   };
+  coursesServiceSpy.getCoursesList.and.returnValue(of(coursesMock));
+  coursesServiceSpy.searchCourses.and.returnValue(of(coursesMock));
+  coursesServiceSpy.removeCourse.and.returnValue(of(null));
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -35,7 +36,6 @@ describe('CoursesPageComponent', () => {
       declarations: [ CoursesPageComponent, OrderPipe ],
       schemas: [ NO_ERRORS_SCHEMA ],
     })
-    .overrideProvider(SearchPipe, { useValue: searchPipeSpy })
     .compileComponents();
   }));
 
@@ -43,7 +43,6 @@ describe('CoursesPageComponent', () => {
     fixture = TestBed.createComponent(CoursesPageComponent);
     component = fixture.componentInstance;
     element = fixture.debugElement;
-    coursesServiceSpy.getCoursesList.and.returnValue(coursesMock);
     fixture.detectChanges();
   });
 
@@ -95,7 +94,7 @@ describe('CoursesPageComponent', () => {
   it('should oped dialog and call service methods on delete', () => {
     const courseId = 2;
 
-    component.onDeleteCourse(courseId);
+    component.onDeleteCourse({ courseId, title: 'title' });
     expect(dialogMock.open).toHaveBeenCalled();
 
     dialogMock.open().afterClosed().subscribe(() => {
@@ -115,6 +114,6 @@ describe('CoursesPageComponent', () => {
   it('should call SearchPipe', () => {
     const input = 'some input';
     component.onSearch(input);
-    expect(searchPipeSpy.transform).toHaveBeenCalledWith(component.allCourses, input, 'title');
+    expect(coursesServiceSpy.searchCourses).toHaveBeenCalledWith(input);
   });
 });

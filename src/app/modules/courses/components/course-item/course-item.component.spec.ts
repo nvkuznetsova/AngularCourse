@@ -50,7 +50,7 @@ describe('CourseItemComponent', () => {
     const deleteBtn = element.query(By.css('[data-marker="delete-btn"]')).nativeElement;
     deleteBtn.click();
     expect(onDeleteSpy).toHaveBeenCalled();
-    expect(emitSpy).toHaveBeenCalledWith(component.course.id);
+    expect(emitSpy).toHaveBeenCalledWith({ courseId: component.course.id, title: component.course.title });
   });
 
   it('should display star icon if course is top rated', () => {
