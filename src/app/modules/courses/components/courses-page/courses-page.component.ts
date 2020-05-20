@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { faPlus } from '@fortawesome/free-solid-svg-icons';
-import { Observable, Subscription } from 'rxjs';
-import { concatMap, switchMap, tap } from 'rxjs/operators';
+import { Observable, of, Subscription } from 'rxjs';
+import { concatMap, debounceTime, distinctUntilChanged, filter, switchMap, tap } from 'rxjs/operators';
 import { CourseModel } from 'src/app/model/Course';
 import { ConfirmModalComponent } from 'src/app/modules/core/components/confirm-modal/confirm-modal.component';
 import { CoursesService } from 'src/app/services/courses/courses.service';
@@ -21,17 +21,15 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
   faPlus = faPlus;
   courses: Array<CourseModel> = [];
   sub$ = new Subscription();
-  isLoading: boolean;
 
   constructor(
     private coursesService: CoursesService,
     private dialog: MatDialog,
     private router: Router,
-    private ref: ChangeDetectorRef,
-  ) { }
+    private ref: ChangeDetectorRef
+  ) {}
 
   ngOnInit() {
-    this.isLoading = true;
     this.sub$.add(this.getAllCourses().subscribe());
   }
 
@@ -41,9 +39,8 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
 
   getAllCourses(limit?: number): Observable<Array<CourseModel>> {
     return this.coursesService.getCoursesList(limit).pipe(
-      tap(courses => {
+      tap((courses) => {
         this.courses = courses;
-        this.isLoading = false;
         this.ref.markForCheck();
       })
     );
@@ -55,7 +52,6 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
 
   onLoadMoreCourses(): void {
     const limit = this.courses.length + 5;
-    this.isLoading = true;
     this.sub$.add(this.getAllCourses(limit).subscribe());
   }
 
@@ -63,7 +59,7 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl(`/courses/${courseId}`);
   }
 
-  onDeleteCourse(course: { courseId: number, title: string }): void {
+  onDeleteCourse(course: { courseId: number; title: string }): void {
     const dialogData = {
       title: 'Delete course?',
       message: `Are you sure you want to delete ${course.title}?`,
@@ -76,27 +72,36 @@ export class CoursesPageComponent implements OnInit, OnDestroy {
       width: '400px',
     });
 
-    dialogRef.afterClosed().pipe(
-      switchMap(result => {
-        if (result) {
-          this.isLoading = true;
-          this.ref.markForCheck();
-          return this.coursesService.removeCourse(course.courseId).pipe(
-            concatMap(() => this.getAllCourses(this.courses.length))
-          );
-        }
-      })
-    ).subscribe();
+    dialogRef
+      .afterClosed()
+      .pipe(
+        switchMap((result) => {
+          if (result) {
+            this.ref.markForCheck();
+            return this.coursesService
+              .removeCourse(course.courseId)
+              .pipe(concatMap(() => this.getAllCourses(this.courses.length)));
+          }
+        })
+      )
+      .subscribe();
   }
 
   onSearch(input: string): void {
-    this.sub$.add(this.coursesService.searchCourses(input.toLowerCase()).pipe(
-      tap(courses => {
-        this.courses = courses;
-        this.isLoading = false;
-        this.ref.markForCheck();
-      })
+    this.sub$.add(of(input).pipe(
+      debounceTime(500),
+      filter(text => !!text && text.length >= 3),
+      distinctUntilChanged(),
+      switchMap((text) => (
+        this.coursesService
+        .searchCourses(text.toLowerCase())
+        .pipe(
+          tap((courses) => {
+            this.courses = courses;
+            this.ref.markForCheck();
+          })
+        )
+      )),
     ).subscribe());
   }
-
 }

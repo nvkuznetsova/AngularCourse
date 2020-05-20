@@ -1,25 +1,52 @@
-import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { delay, tap } from 'rxjs/operators';
 
 import { AuthService } from '../services/auth/auth.service';
+import { LoaderService } from '../services/loader/loader.service';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
+
+  constructor(
+    private authService: AuthService,
+    private loaderService: LoaderService
+  ) {}
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+    let processedReq;
+
+    this.showLoader();
+
     if (this.authService.isAuthenticated()) {
       const token = localStorage.getItem('Token');
-      const authReq = req.clone({
+      processedReq = req.clone({
         headers: req.headers.append('Authorization', token),
       });
-
-      return next.handle(authReq);
+    } else {
+      processedReq = req.clone();
     }
-    return next.handle(req.clone());
+
+    return next.handle(processedReq).pipe(
+      delay(500),
+      tap((event: HttpEvent<any>) => {
+        if (event instanceof HttpResponse) {
+          this.hideLoader();
+        }
+      },
+      (_: any) => this.hideLoader())
+    );
   }
+
+  private showLoader(): void {
+    this.loaderService.show();
+  }
+  private hideLoader(): void {
+    this.loaderService.hide();
+  }
+
 }

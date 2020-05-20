@@ -27,15 +27,23 @@ describe('AuthGuardGuard', () => {
 
   it('should return true if navigation allowed', inject([ AuthGuard ], (guard: AuthGuard) => {
     authServiceSpy.isAuthenticated.and.returnValue(true);
-    expect(guard.canActivate()).toBeTruthy();
-    expect(guard.canActivateChild()).toBeTruthy();
+    guard.canActivate().subscribe(res => {
+      expect(res).toBeTruthy();
+    });
+    guard.canActivateChild().subscribe(res => {
+      expect(res).toBeTruthy();
+    });
   }));
 
   it('should redirect to login if navigation allowed', inject([ AuthGuard ], (guard: AuthGuard) => {
     const mockResult = {} as UrlTree;
     authServiceSpy.isAuthenticated.and.returnValue(false);
     mockRouter.parseUrl.and.returnValue(mockResult);
-    expect(guard.canActivate()).toBe(mockResult);
-    expect(guard.canActivateChild()).toBe(mockResult);
+    guard.canActivate().subscribe(res => {
+      expect(res).toBe(mockResult);
+    });
+    guard.canActivateChild().subscribe(res => {
+      expect(res).toBe(mockResult);
+    });
   }));
 });

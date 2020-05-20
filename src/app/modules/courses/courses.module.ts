@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { CoreModule } from '../core/core.module';
-import { MaterialModule } from '../core/material.module';
 
 import { AddEditCourseComponent } from './components/add-edit-course/add-edit-course.component';
 import { CourseItemComponent } from './components/course-item/course-item.component';
@@ -29,7 +28,6 @@ import { HighlightCourseDirective } from './directives/highlight-course.directiv
     CoreModule,
     FontAwesomeModule,
     FormsModule,
-    MaterialModule,
   ],
 })
 export class CoursesModule {}

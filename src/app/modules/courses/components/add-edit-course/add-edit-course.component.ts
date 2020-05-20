@@ -15,7 +15,6 @@ export class AddEditCourseComponent implements OnInit, OnDestroy {
   pageHeader: string;
   course: CourseModel;
   isEditMode: boolean;
-  isLoading: boolean;
   sub$ = new Subscription();
 
   constructor(
@@ -28,13 +27,9 @@ export class AddEditCourseComponent implements OnInit, OnDestroy {
     this.isEditMode = this.route.snapshot.paramMap.has('id');
     this.pageHeader = this.isEditMode ? 'Edit course' : 'New course';
     if (this.isEditMode) {
-      this.isLoading = true;
       const courseId = +this.route.snapshot.paramMap.get('id');
       this.sub$.add(this.coursesService.getCourseById(courseId).pipe(
-        tap(vc => {
-          this.course = vc;
-          this.isLoading = false;
-        })
+        tap(vc => this.course = vc)
       ).subscribe());
     }
   }
