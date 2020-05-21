@@ -12,7 +12,8 @@ import { HandleErrorService } from '../handle-error/handle-error.service';
   providedIn: 'root',
 })
 export class AuthService {
-  user = new Subject<string>();
+  private user = new Subject<string>();
+  // tslint:disable-next-line: member-ordering
   userInfo$ = this.user.asObservable();
   private usersUrl = '/users';
 
