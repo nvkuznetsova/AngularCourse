@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 import { CoreModule } from '../core/core.module';
@@ -12,6 +12,7 @@ import { SearchComponent } from './components/search/search.component';
 import { CoursesRoutingModule } from './courses-routing.module';
 import { CoursesComponent } from './courses.component';
 import { HighlightCourseDirective } from './directives/highlight-course.directive';
+import { AuthorsComponent } from './components/authors/authors.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HighlightCourseDirective } from './directives/highlight-course.directiv
     HighlightCourseDirective,
     AddEditCourseComponent,
     CoursesComponent,
+    AuthorsComponent,
   ],
   imports: [
     CommonModule,
@@ -28,6 +30,7 @@ import { HighlightCourseDirective } from './directives/highlight-course.directiv
     CoreModule,
     FontAwesomeModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
 })
 export class CoursesModule {}

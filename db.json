@@ -18,9 +18,10 @@
     {
       "id": 4980,
       "title": "magna excepteur aute deserunt",
+      "creationDate": "2019-05-31T02:02:36.000Z",
+      "duration": 207,
       "description": "Sunt culpa officia minim commodo eiusmod irure sunt nostrud. Mollit aliquip id occaecat officia proident anim dolor officia qui voluptate consectetur laborum. Duis incididunt culpa aliqua mollit do fugiat ea dolor mollit irure Lorem tempor.",
       "topRated": false,
-      "creationDate": "2019-05-31T02:02:36+00:00",
       "authors": [
         {
           "id": 8413,
@@ -28,17 +29,14 @@
           "lastName": "Richardson"
         },
         {
-          "id": 7458,
-          "name": "Deana",
-          "lastName": "Bruce"
+          "id": "5b7a84624010db4d640e0099",
+          "name": "Vincent Doyle"
         },
         {
-          "id": 5508,
-          "name": "Patsy",
-          "lastName": "Bright"
+          "id": "5b7a84628f39d42b3d56174f",
+          "name": "Deleon Gill"
         }
-      ],
-      "duration": 207
+      ]
     },
     {
       "id": 4282,
@@ -63,9 +61,10 @@
     {
       "id": 1936,
       "title": "reprehenderit est veniam elit",
+      "creationDate": "2019-03-18T06:36:07.000Z",
+      "duration": 232,
       "description": "Consectetur veniam non nulla in laboris minim ipsum. Dolor aliqua irure sint do irure magna tempor culpa quis. Deserunt amet occaecat velit sit.",
       "topRated": true,
-      "creationDate": "2019-03-18T06:36:07+00:00",
       "authors": [
         {
           "id": 9926,
@@ -73,17 +72,14 @@
           "lastName": "Holland"
         },
         {
-          "id": 6440,
-          "name": "Andrews",
-          "lastName": "Byers"
+          "id": "5b7a84624010db4d640e0099",
+          "name": "Vincent Doyle"
         },
         {
-          "id": 8509,
-          "name": "Shawn",
-          "lastName": "Craig"
+          "id": "5b7a8462863c25502ed32168",
+          "name": "Janna Kelly"
         }
-      ],
-      "duration": 232
+      ]
     },
     {
       "id": 2006,
@@ -679,6 +675,31 @@
         }
       ],
       "duration": 31
+    },
+    {
+      "id": 9818,
+      "title": "new course",
+      "creationDate": "2020-05-31T21:00:00.000Z",
+      "duration": 90,
+      "description": "new course new course new course",
+      "authors": ""
+    },
+    {
+      "id": 9819,
+      "title": "test",
+      "creationDate": "2020-06-30T21:00:00.000Z",
+      "duration": 85,
+      "description": "veryveryveryvery loooooooooooooooooooooooooooooong text",
+      "authors": [
+        {
+          "id": "5b7a84624010db4d640e0099",
+          "name": "Vincent Doyle"
+        },
+        {
+          "id": "5b7a84628298a95c17462193",
+          "name": "Carey Jarvis"
+        }
+      ]
     }
   ],
   "users": [
@@ -705,6 +726,68 @@
       "lastName": "Baggins",
       "email": "baggins@gmail.com",
       "password": "qwerty"
+    }
+  ],
+  "authors": [
+    {
+      "id": "5b7a846290d6ff6894377fb5",
+      "name": "Decker Albert"
+    },
+    {
+      "id": "5b7a84624010db4d640e0099",
+      "name": "Vincent Doyle"
+    },
+    {
+      "id": "5b7a8462e720a86db64774e7",
+      "name": "Padilla Berger"
+    },
+    {
+      "id": "5b7a84628298a95c17462193",
+      "name": "Carey Jarvis"
+    },
+    {
+      "id": "5b7a846284414c93c2a94eb8",
+      "name": "Aida Copeland"
+    },
+    {
+      "id": "5b7a846205bf3180ca002c82",
+      "name": "Wall Sandoval"
+    },
+    {
+      "id": "5b7a8462cf7298e6d925d18c",
+      "name": "Shelby Hanson"
+    },
+    {
+      "id": "5b7a8462c5e867ec6a1a9b00",
+      "name": "Jodi Barrett"
+    },
+    {
+      "id": "5b7a8462db677f5f1fedd275",
+      "name": "Baird Bright"
+    },
+    {
+      "id": "5b7a84628f39d42b3d56174f",
+      "name": "Deleon Gill"
+    },
+    {
+      "id": "5b7a8462435c9561be3d94b1",
+      "name": "Gallagher Hobbs"
+    },
+    {
+      "id": "5b7a8462863c25502ed32168",
+      "name": "Janna Kelly"
+    },
+    {
+      "id": "5b7a846270affc8f0438eddf",
+      "name": "Solomon Dotson"
+    },
+    {
+      "id": "5b7a846297d0714fe5e92db8",
+      "name": "Patrick Macdonald"
+    },
+    {
+      "id": "5b7a8462f3034f386fae2be4",
+      "name": "Atkins Newman"
     }
   ]
 }

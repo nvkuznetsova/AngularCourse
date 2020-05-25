@@ -1,0 +1,19 @@
+mat-form-field {
+  min-width: 681px;
+
+  @media (max-width: 740px) {
+    min-width: 341px;
+  }
+}
+
+.close-icon {
+  ::ng-deep svg {
+    vertical-align: text-top;
+  }
+}
+
+.authors-input {
+  ::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 10px !important;
+  }
+}

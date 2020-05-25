@@ -1,0 +1,28 @@
+<mat-form-field appearance="outline" class="authors-input">
+  <mat-label>Authors:</mat-label>
+  <mat-chip-list #authorsList [formControl]="control">
+    <mat-chip
+      *ngFor="let author of control.value"
+      [removable]="true"
+      (removed)="removeAuthor(author.id)">
+      {{ author.name }}
+      <fa-icon matChipRemove [icon]="faClose" class="close-icon"></fa-icon>
+    </mat-chip>
+    <div [formGroup]="authorsGroup">
+      <input matInput #authorsInput
+        formControlName="authorsControl"
+        [matAutocomplete]="authorsAutocomplete"
+        [matChipInputFor]="authorsList"
+        [matChipInputSeparatorKeyCodes]="separators"
+        placeholder="Start typing" type="text">
+    </div>
+  </mat-chip-list>
+  <mat-autocomplete #authorsAutocomplete="matAutocomplete" (optionSelected)="selectAuthor($event)">
+    <mat-option *ngFor="let author of (filteredAuthors$ | async)" [value]="author.id">
+      {{ author.name }}
+    </mat-option>
+  </mat-autocomplete>
+</mat-form-field>
+<mat-error *ngIf="(control.touched || control.dirty) && !control.value.length">
+  This field is required
+</mat-error>

@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import 'src/styles/colors.scss';
 
 *{
   margin: 0;
@@ -13,4 +14,8 @@
 body {
   position: relative;
   height: 100vh;
+}
+
+.snackbar-warn {
+  background-color: $warn;
 }

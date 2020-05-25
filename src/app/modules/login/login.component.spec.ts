@@ -1,8 +1,9 @@
-import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
+import { FormBuilder } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { AuthService } from 'src/app/services/auth/auth.service';
 
 import { LoginComponent } from './login.component';
@@ -10,18 +11,20 @@ import { LoginComponent } from './login.component';
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let element: DebugElement;
 
   const authServiceSpy = jasmine.createSpyObj('AuthService', [ 'login', 'isAuthenticated' ]);
   const routerSpy = {
     navigateByUrl: jasmine.createSpy('navigateByUrl'),
   };
+  const snackBerSpy = { open: jasmine.createSpy('open') };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
+        FormBuilder,
         { provide: Router, useValue: routerSpy },
         { provide: AuthService, useValue: authServiceSpy },
+        { provide: MatSnackBar, useValue: snackBerSpy },
       ],
       declarations: [ LoginComponent ],
       schemas: [ NO_ERRORS_SCHEMA ],
@@ -32,7 +35,6 @@ describe('LoginComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    element = fixture.debugElement;
     fixture.detectChanges();
   });
 
@@ -42,23 +44,10 @@ describe('LoginComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should call `onLogin` handler', () => {
-    const loginSpy = spyOn(component, 'onLogin');
-    const loginBtn = element.query(By.css('[data-marker="btn-login"]')).nativeElement;
-    loginBtn.click();
-    expect(loginSpy).toHaveBeenCalledWith();
-  });
-
-  it('should not login user if email and password not entered', () => {
-    component.email = null;
-    component.password = null;
-    component.onLogin();
-    expect(authServiceSpy.login).not.toHaveBeenCalled();
-  });
-
   it('should login user and redirect to courses page on login', () => {
-    component.email = 'test@email.com';
-    component.password = '123';
+    component.loginForm.controls['email'].setValue('email@email.com');
+    component.loginForm.controls['password'].setValue('password');
+    fixture.detectChanges();
     authServiceSpy.isAuthenticated.and.returnValue(true);
     authServiceSpy.login.and.returnValue(of(null));
 
@@ -66,5 +55,12 @@ describe('LoginComponent', () => {
     expect(authServiceSpy.login).toHaveBeenCalled();
     expect(authServiceSpy.isAuthenticated).toHaveBeenCalled();
     expect(routerSpy.navigateByUrl).toHaveBeenCalledWith('/courses');
+  });
+
+  it('should login user and redirect to courses page on login', () => {
+    authServiceSpy.login.and.returnValue(throwError('Error'));
+
+    component.onLogin();
+    expect(snackBerSpy.open).toHaveBeenCalled();
   });
 });

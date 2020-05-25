@@ -1,3 +1,4 @@
+import { IAuthor } from '../domain/Author';
 import { ICourse } from '../domain/Course';
 
 export class CourseModel implements ICourse {
@@ -9,5 +10,6 @@ export class CourseModel implements ICourse {
     public duration: number,
     public description: string,
     public topRated: boolean,
+    public authors: Array<IAuthor>
     ) { }
 }

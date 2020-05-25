@@ -1,4 +1,4 @@
 <div class="search">
-  <input class="search__input" type="text" placeholder="{{ placeholdertext }}" [(ngModel)]="searchInput" (keyup)="onSearch()" />
+  <input class="search__input" type="text" placeholder="{{ placeholdertext }}" (input)="onChange($event.target.value)" (blur)="onTouch()" />
   <!-- <button class="search__btn" type="button" data-marker="search-btn">{{ btnText }}</button> -->
 </div>

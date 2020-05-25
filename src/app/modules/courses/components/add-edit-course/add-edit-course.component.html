@@ -2,37 +2,48 @@
 <div class="add-edit-course">
   <div class="add-edit-course__wrapper">
     <div class="add-edit-course__header">{{ pageHeader }}</div>
-    <form class="add-edit-course__form" #courseForm="ngForm">
+    <form class="add-edit-course__form" [formGroup]="courseForm">
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Title:</mat-label>
-        <input matInput name="title" placeholder="Add title" type="text" ngModel required>
+        <input matInput formControlName="title" placeholder="Add title" type="text" required>
       </mat-form-field>
+      <mat-error *ngIf="(title.touched || title.dirty) && (title.hasError('required') || title.hasError('maxlength'))">
+        <p *ngIf="title.hasError('required')">{{ requiredError }}</p>
+        <p *ngIf="title.hasError('maxlength')">Maximum 50 characters</p>
+      </mat-error>
 
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Description:</mat-label>
-        <textarea matInput name="description" placeholder="Add description" rows="3" ngModel required></textarea>
+        <textarea matInput formControlName="description" placeholder="Add description" rows="3"required></textarea>
       </mat-form-field>
+      <mat-error *ngIf="(description.touched || description.dirty) && (description.hasError('required') || description.hasError('maxlength'))">
+        <p *ngIf="description.hasError('required')">{{ requiredError }}</p>
+        <p *ngIf="description.hasError('maxlength')">Maximum 500 characters</p>
+      </mat-error>
 
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Duration:</mat-label>
-        <input matInput name="duration" placeholder="Duration in minutes" type="number" ngModel required>
+        <input matInput formControlName="duration" placeholder="Duration in minutes" type="number" required>
       </mat-form-field>
+      <mat-error *ngIf="(duration.touched || duration.dirty) && duration.hasError('required')">
+        {{ requiredError }}
+      </mat-error>
 
       <mat-form-field appearance="outline" class="form-field">
         <mat-label>Date:</mat-label>
-        <input matInput [matDatepicker]="courseStartDate" name="creationDate" placeholder="Choose start date" ngModel required>
+        <input matInput [matDatepicker]="courseStartDate" formControlName="creationDate" placeholder="Choose start date" required>
         <mat-datepicker-toggle matSuffix [for]="courseStartDate"></mat-datepicker-toggle>
         <mat-datepicker #courseStartDate></mat-datepicker>
       </mat-form-field>
+      <mat-error *ngIf="(creationDate.touched || creationDate.dirty) && creationDate.hasError('required')">
+        {{ requiredError }}
+      </mat-error>
 
-      <mat-form-field appearance="outline" class="form-field">
-        <mat-label>Authors:</mat-label>
-        <input matInput placeholder="Start typing" type="text">
-      </mat-form-field>
+      <app-authors [control]="authors"></app-authors>
     </form>
     <div class="add-edit-course__footer">
       <button class="btn-cancel" (click)="goToMainPage()" data-marker="btn-cancel">Cancel</button>
-      <button class="btn-save" (click)="onSave(courseForm.value)" data-marker="btn-save">Save</button>
+      <button class="btn-save" [class.disabled]="isFormInvalid()" (click)="onSave()" [disabled]="isFormInvalid()" data-marker="btn-save">Save</button>
     </div>
   </div>
 </div>

@@ -59,6 +59,14 @@
       }
     }
 
+    .all-loaded {
+      margin-bottom: 24px;
+      text-align: center;
+      line-height: 48px;
+      color: $soft-blue;
+      font-weight: 600;
+    }
+
     @media (max-width: 650px) {
       margin: 0 20px;
     }

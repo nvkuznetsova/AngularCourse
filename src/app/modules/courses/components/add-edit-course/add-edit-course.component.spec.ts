@@ -1,6 +1,6 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { course } from 'src/app/mocks/courses-mock';
@@ -22,17 +22,18 @@ describe('AddEditCourseComponent', () => {
   const mockRouter = {
     navigateByUrl: jasmine.createSpy('navigateByUrl'),
   };
-  const coursesServiceSpy = jasmine.createSpyObj('CoursesService', [ 'getCourseById', 'createCourse' ]);
+  const coursesServiceSpy = jasmine.createSpyObj('CoursesService', [ 'getCourseById', 'createCourse', 'updateCourse' ]);
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
+        FormBuilder,
         { provide: CoursesService, useValue: coursesServiceSpy },
         { provide: Router, useValue: mockRouter },
         { provide: ActivatedRoute, useValue: routeMock },
       ],
       declarations: [ AddEditCourseComponent ],
-      imports: [ FormsModule ],
+      imports: [ FormsModule, ReactiveFormsModule ],
       schemas: [ NO_ERRORS_SCHEMA ],
     })
     .compileComponents();
@@ -43,6 +44,7 @@ describe('AddEditCourseComponent', () => {
     component = fixture.componentInstance;
     coursesServiceSpy.getCourseById.and.returnValue(of(course));
     coursesServiceSpy.createCourse.and.returnValue(of(null));
+    coursesServiceSpy.updateCourse.and.returnValue(of(null));
     fixture.detectChanges();
   });
 
@@ -57,7 +59,13 @@ describe('AddEditCourseComponent', () => {
 
   it('should save course', () => {
     component.isEditMode = false;
-    component.onSave(course);
+    component.onSave();
     expect(coursesServiceSpy.createCourse).toHaveBeenCalled();
+  });
+
+  it('should update course', () => {
+    component.isEditMode = true;
+    component.onSave();
+    expect(coursesServiceSpy.updateCourse).toHaveBeenCalled();
   });
 });
