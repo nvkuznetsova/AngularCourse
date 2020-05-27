@@ -1,0 +1,9 @@
+<div mat-dialog-title class="dialog__title">
+  <span>{{ data.title }}</span>
+</div>
+<mat-divider></mat-divider>
+<div class="dialog__message">{{ data.message }}</div>
+<div class="dialog__actions" mat-dialog-actions>
+  <button class="btn-cancel" type="button" mat-dialog-close>{{ cancelLabel }}</button>
+  <button class="btn-confirm" type="button" (click)="onConfirm()" data-marker="btn-confirm">{{ data.confirmLabel }}</button>
+</div>

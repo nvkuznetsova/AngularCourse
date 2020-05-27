@@ -1,4 +1,5 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -6,12 +7,14 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
   styleUrls: [ './breadcrumbs.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent {
+  @Input() breadcrumbLabel: string;
   breadcrumbs = 'Course';
 
-  constructor() { }
+  constructor(private router: Router) {  }
 
-  ngOnInit() {
+  goToMainPage(): void {
+    this.router.navigateByUrl('/courses');
   }
 
 }

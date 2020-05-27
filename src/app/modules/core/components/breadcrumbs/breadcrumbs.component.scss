@@ -8,12 +8,29 @@
   height: 64px;
   padding: 20px 0;
   box-sizing: border-box;
-  color: $dark-grey;
+  color: $steel;
   background-color: white;
-  font-weight: 600;
 
   &__path {
     margin-left: 85px;
+
+    span {
+      display: inline-block;
+      &:last-child {
+        color: $dark-grey;
+        font-weight: 600;
+      }
+    }
+
+    .courses-link {
+      padding-right: 3px;
+      cursor: pointer;
+    }
+
+    .divider {
+      padding-right: 3px;
+      color: $dark-sky-blue;
+    }
 
     @media (max-width: 650px) {
       margin-left: 40px;

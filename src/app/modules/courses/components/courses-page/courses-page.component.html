@@ -6,7 +6,7 @@
       <fa-icon class="add-btn__icon" [icon]="faPlus"></fa-icon>{{ addBtnText }}
     </button>
   </div>
-  <div class="courses-wrapper" *ngIf="courses.length; else emptyMessage">
+  <div class="courses-wrapper" *ngIf="courses.length else emptyMessage">
     <app-course-item
       *ngFor="let course of (courses | orderBy: 'creationDate')"
       [course]="course"

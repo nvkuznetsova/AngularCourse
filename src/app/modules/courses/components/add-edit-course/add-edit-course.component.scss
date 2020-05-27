@@ -1,0 +1,102 @@
+@import 'src/styles/colors.scss';
+
+.add-edit-course {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $pale-grey;
+
+  &__wrapper {
+    margin: 24px 0;
+    padding: 24px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08);
+  }
+
+  &__header {
+    margin-bottom: 24px;
+    font-size: 24px;
+    font-weight: 600;
+    color: $dark-grey;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 680px;
+    padding: 0;
+
+    @media (max-width: 740px) {
+      max-width: 340px;
+    }
+
+    .form-field {
+      margin-bottom: 10px;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .btn-cancel {
+      height: 36px;
+      margin-right: 12px;
+      padding: 0 18px;
+      font-weight: 600;
+      color: $slate-grey;
+      background-color: $light-grey;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    .btn-save {
+      height: 36px;
+      padding: 0 18px;
+      border: none;
+      border-radius: 3px;
+      color: white;
+      background-color: $sick-green;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba($color: $sick-green, $alpha: 0.8);
+      }
+    }
+  }
+
+
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  width: 100% !important;
+  padding: 0.7em 0 !important;
+  box-sizing: border-box;
+}
+
+::ng-deep #mat-input-0,
+::ng-deep #mat-input-1,
+::ng-deep #mat-input-2,
+::ng-deep #mat-input-4 {
+  width: 660px;
+  min-width: 660px;
+
+  @media (max-width: 740px) {
+    min-width: 320px;
+  }
+}
+
+::ng-deep #mat-input-3 {
+  width: 625px;
+  min-width: 625px;
+}
+
+::ng-deep .mat-form-field-infix {
+  border-top: 0.3em solid transparent !important;
+}

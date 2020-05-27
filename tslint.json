@@ -94,7 +94,8 @@
     "use-pipe-transform-interface": true,
     "no-debugger": true,
     "no-empty-interface": true,
-    "unnecessary-else": true
+    "unnecessary-else": true,
+    "no-string-literal": false
   },
   "rulesDirectory": ["codelyzer"]
 }

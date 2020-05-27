@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import { AuthService } from 'src/app/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -6,15 +10,39 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   styleUrls: [ './header.component.scss' ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   logoText = 'Video Course';
-  userName = 'User';
+  logoffBtnText = 'Log off';
   isLoggedIn = false;
-  loginBtnText = this.isLoggedIn ? 'Log off' : 'Log in';
+  userInfo: string;
+  user$ = new Subscription();
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private ref: ChangeDetectorRef,
+  ) { }
 
   ngOnInit() {
+    this.user$.add(this.authService.getUserInfo().subscribe());
+    this.user$.add(this.authService.userInfo$.pipe(
+      tap(user => {
+        this.userInfo = user;
+        this.ref.markForCheck();
+      })
+    ).subscribe());
+  }
+
+  ngOnDestroy() {
+    this.user$.unsubscribe();
+  }
+
+  onLogOff(): void {
+    this.authService.logout();
+  }
+
+  goToMainPage(): void {
+    this.router.navigateByUrl('/courses');
   }
 
 }
