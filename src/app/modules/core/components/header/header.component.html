@@ -1,6 +1,6 @@
 <header class="main-header">
-  <div class="main-header__logo">{{ logoText | uppercase }}</div>
-  <div class="user-info" *ngIf="isLoggedIn">
+  <div class="main-header__logo" (click)="goToMainPage()">{{ logoText | uppercase }}</div>
+  <div class="user-info" *ngIf="userInfo">
     <div class="user-info__user-name">{{ userInfo }}</div>
     <div class="user-info__login-btn" (click)="onLogOff()">{{ logoffBtnText }}</div>
   </div>

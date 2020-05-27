@@ -4,12 +4,12 @@
     <form class="login-form">
       <mat-form-field appearance="outline">
         <mat-label>Email</mat-label>
-        <input matInput placeholder="Enter email" type="text" required>
+        <input matInput placeholder="Enter email" type="text" name="Email" [(ngModel)]="email" required>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
         <mat-label>Password</mat-label>
-        <input matInput placeholder="Enter password" type="password" required>
+        <input matInput placeholder="Enter password" type="password" name="Password" [(ngModel)]="password" required>
       </mat-form-field>
     </form>
     <div class="login-form-footer">
