@@ -11,7 +11,7 @@ import { CourseModel } from 'src/app/model/Course';
 export class CourseItemComponent implements OnInit, DoCheck {
   @Input() course: CourseModel;
   @Output() edit: EventEmitter<number> = new EventEmitter<number>();
-  @Output() delete: EventEmitter<number> = new EventEmitter<number>();
+  @Output() delete: EventEmitter<{ courseId: number, title: string }> = new EventEmitter<{ courseId: number, title: string }>();
   faPen = faPen;
   faTrash = faTrash;
   faClock = faClock;
@@ -35,7 +35,7 @@ export class CourseItemComponent implements OnInit, DoCheck {
   }
 
   onDelete(): void {
-    this.delete.emit(this.course.id);
+    this.delete.emit({ courseId: this.course.id, title: this.course.title });
   }
 
 }

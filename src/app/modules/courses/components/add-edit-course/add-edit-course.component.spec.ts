@@ -1,6 +1,8 @@
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, convertToParamMap, Router } from '@angular/router';
+import { of } from 'rxjs';
 import { course } from 'src/app/mocks/courses-mock';
 import { CoursesService } from 'src/app/services/courses/courses.service';
 
@@ -30,6 +32,7 @@ describe('AddEditCourseComponent', () => {
         { provide: ActivatedRoute, useValue: routeMock },
       ],
       declarations: [ AddEditCourseComponent ],
+      imports: [ FormsModule ],
       schemas: [ NO_ERRORS_SCHEMA ],
     })
     .compileComponents();
@@ -38,7 +41,8 @@ describe('AddEditCourseComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AddEditCourseComponent);
     component = fixture.componentInstance;
-    coursesServiceSpy.getCourseById.and.returnValue(course);
+    coursesServiceSpy.getCourseById.and.returnValue(of(course));
+    coursesServiceSpy.createCourse.and.returnValue(of(null));
     fixture.detectChanges();
   });
 
@@ -53,7 +57,7 @@ describe('AddEditCourseComponent', () => {
 
   it('should save course', () => {
     component.isEditMode = false;
-    component.onSave();
+    component.onSave(course);
     expect(coursesServiceSpy.createCourse).toHaveBeenCalled();
   });
 });

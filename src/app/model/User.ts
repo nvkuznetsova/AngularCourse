@@ -6,7 +6,6 @@ export class UserModel implements IUser {
     public firstName: string,
     public lastName: string,
     public email: string,
-    public isAuthenticated = false,
   ) {}
 
   getLogin(): string {
