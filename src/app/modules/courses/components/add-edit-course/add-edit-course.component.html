@@ -1,5 +1,5 @@
 <app-breadcrumbs [breadcrumbLabel]="isEditMode ? course?.title : 'New course'"></app-breadcrumbs>
-<div class="add-edit-course" *ngIf="!isLoading; else spinner">
+<div class="add-edit-course">
   <div class="add-edit-course__wrapper">
     <div class="add-edit-course__header">{{ pageHeader }}</div>
     <form class="add-edit-course__form" #courseForm="ngForm">
@@ -36,7 +36,3 @@
     </div>
   </div>
 </div>
-
-<ng-template #spinner>
-  <mat-spinner></mat-spinner>
-</ng-template>

@@ -1,4 +1,4 @@
-<div class="courses-page" *ngIf="!isLoading; else spinner">
+<div class="courses-page">
   <app-breadcrumbs></app-breadcrumbs>
   <app-search (search)="onSearch($event)" data-marker="search"></app-search>
   <div class="add-btn-wrapper">
@@ -20,8 +20,4 @@
 
 <ng-template #emptyMessage>
   <div class="empty-message">{{ emptyCoursesMessage | uppercase }}</div>
-</ng-template>
-
-<ng-template #spinner>
-  <mat-spinner></mat-spinner>
 </ng-template>
