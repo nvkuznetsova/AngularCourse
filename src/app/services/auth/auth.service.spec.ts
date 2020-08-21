@@ -1,7 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { throwError } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { UserModel } from 'src/app/model/User';
 
 import { HandleErrorService } from '../handle-error/handle-error.service';
@@ -41,13 +41,21 @@ describe('AuthService', () => {
     const email = 'user@email.com';
     const password = 'qwerty';
     const user = new UserModel(1, 'user', 'user', email);
+    const response = {
+      id: 1,
+      firstName: 'user',
+      lastName: 'user',
+      fakeToken: 'Token',
+      email: 'user@email.com',
+    };
+    spyOn(authServide, 'getUserInfo').and.returnValue(of(user));
 
     authServide.login(email, password)
       .subscribe(res => expect(res).toEqual(user));
 
     const req = httpTestingController.expectOne(`/users?email=${email}&password=${password}`);
     expect(req.request.method).toBe('GET');
-    req.flush(user);
+    req.flush([ response ]);
   });
 
   it('should return user info', () => {
@@ -64,13 +72,13 @@ describe('AuthService', () => {
     spyOn(localStorage, 'getItem').and.callFake(key => key);
 
     authServide.getUserInfo()
-      .subscribe(res => expect(res).toEqual(user));
+      .subscribe(res => expect(res).toBeUndefined());
     authServide.userInfo$
       .subscribe(userInfo => expect(userInfo).toEqual(user.getLogin()));
 
     const req = httpTestingController.expectOne(`/users?fakeToken=${token}`);
     expect(req.request.method).toBe('GET');
-    req.flush(response);
+    req.flush([ response ]);
   });
 
   it('should logout user', () => {

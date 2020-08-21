@@ -1,5 +1,6 @@
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -15,7 +16,8 @@ describe('CoursesPageComponent', () => {
   let fixture: ComponentFixture<CoursesPageComponent>;
   let element: DebugElement;
 
-  const coursesServiceSpy = jasmine.createSpyObj('CoursesService', [ 'getCoursesList', 'removeCourse', 'searchCourses' ]);
+  const coursesServiceSpy =
+    jasmine.createSpyObj('CoursesService', [ 'getCoursesList', 'removeCourse', 'searchCourses', 'getCoursesCount' ]);
   const dialogMock = {
     open: jasmine.createSpy('open').and.returnValue({ afterClosed: () => of(true) }),
   };
@@ -29,6 +31,7 @@ describe('CoursesPageComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [
+        FormBuilder,
         { provide: MatDialog, useValue: dialogMock },
         { provide: CoursesService, useValue: coursesServiceSpy },
         { provide: Router, useValue: mockRouter },
@@ -62,11 +65,10 @@ describe('CoursesPageComponent', () => {
     expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/courses/new');
   });
 
-  it('should call `onLoadMoreCourses` handler', () => {
-    const loadMoreSpy = spyOn(component, 'onLoadMoreCourses');
-    const loadMoreBtn = element.query(By.css('[data-marker="load-btn"]')).nativeElement;
-    loadMoreBtn.click();
-    expect(loadMoreSpy).toHaveBeenCalled();
+  it('shouldload more courses', () => {
+    component.onLoadMoreCourses();
+
+    expect(coursesServiceSpy.getCoursesList).toHaveBeenCalled();
   });
 
   it('should call `onEditCourse` handler', () => {
@@ -103,17 +105,4 @@ describe('CoursesPageComponent', () => {
     });
   });
 
-  it('should call `onSearch` handler', () => {
-    const input = 'some input';
-    const onSearchSpy = spyOn(component, 'onSearch');
-    const searchInput = element.query(By.css('[data-marker="search"]'));
-    searchInput.triggerEventHandler('search', input);
-    expect(onSearchSpy).toHaveBeenCalledWith(input);
-  });
-
-  it('should call SearchPipe', () => {
-    const input = 'some input';
-    component.onSearch(input);
-    expect(coursesServiceSpy.searchCourses).toHaveBeenCalledWith(input);
-  });
 });

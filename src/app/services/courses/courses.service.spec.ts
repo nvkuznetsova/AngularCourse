@@ -88,7 +88,7 @@ describe('CoursesService', () => {
         expect(res).toEqual(course);
       });
 
-    const req = httpTestingController.expectOne('/videocourses');
+    const req = httpTestingController.expectOne(`/videocourses/${course.id}`);
     expect(req.request.method).toBe('PUT');
     expect(req.request.body).toEqual(course);
 

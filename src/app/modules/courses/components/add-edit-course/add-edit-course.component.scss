@@ -74,6 +74,11 @@
 
 }
 
+.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
   width: 100% !important;
   padding: 0.7em 0 !important;
@@ -82,9 +87,7 @@
 
 ::ng-deep #mat-input-0,
 ::ng-deep #mat-input-1,
-::ng-deep #mat-input-2,
-::ng-deep #mat-input-4 {
-  width: 660px;
+::ng-deep #mat-input-2 {
   min-width: 660px;
 
   @media (max-width: 740px) {
@@ -93,10 +96,28 @@
 }
 
 ::ng-deep #mat-input-3 {
-  width: 625px;
   min-width: 625px;
+
+  @media (max-width: 740px) {
+    min-width: 285px;
+  }
 }
 
 ::ng-deep .mat-form-field-infix {
   border-top: 0.3em solid transparent !important;
+}
+
+::ng-deep .mat-form-field-wrapper {
+  padding-top: 7px !important;
+  padding-bottom: 0 !important;
+  margin-bottom: 14px !important;
+
+  &:first-of-type {
+    padding-top: 0 !important
+  }
+}
+
+::ng-deep mat-error {
+  width: 100%;
+  margin-top: -21px;
 }

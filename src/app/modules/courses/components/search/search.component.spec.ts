@@ -25,12 +25,20 @@ describe('SearchComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit `searchInput` value', () => {
-    const input = 'some input';
-    const emitSpy = spyOn(component.search, 'emit');
-    component.searchInput = input;
-    fixture.detectChanges();
-    component.onSearch();
-    expect(emitSpy).toHaveBeenCalledWith(input);
+  it('should write value', () => {
+    component.writeValue('test');
+    expect(component.searchInput).toBe('test');
+  });
+
+  it('should set onChange function', () => {
+    const func = (value) => value;
+    component.registerOnChange(func);
+    expect(component.onChange).toEqual(func);
+  });
+
+  it('should set onTouch function', () => {
+    const func = (value) => value;
+    component.registerOnTouched(func);
+    expect(component.onTouch).toEqual(func);
   });
 });
